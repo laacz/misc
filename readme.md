@@ -7,7 +7,8 @@ Inflection of Latvian nouns
 ---------------------------
 
 [loc.php](loc.php) contains code (old as the world, of course), which can inflect Latvian nouns, given their
-nominative case in singular, and gender.
+nominative case in singular, and gender. It has its exceptions and shortcomings, but go ahead - fork it and throw a 
+pull request at me.
 
 Pupiņvaloda
 -----------
