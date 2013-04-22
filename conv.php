@@ -205,7 +205,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 		?>
 		<h2>Rezultāts</h2>
 		<div style="margin-left: 3em; " class="t">
-			<?=nl2br(htmlspecialchars($o);?>
+			<?=nl2br(htmlspecialchars($o));?>
 		</div>
 	<?}?>
 	
