@@ -20,6 +20,6 @@ the go, to prepend it with "p".
 Transliteration
 ---------------
 
-[conv.php](conv.php) provides dump transliteration and detransliteration of Latvian text. It does try to keep
+[conv.php](conv.php) provides dumb transliteration and detransliteration of Latvian text. It does try to keep
 capitalization intact while converting. Also, it has a list of some common exceptions ( _sheema_ should become 
 _shēma_, not _šēma_, etc).
