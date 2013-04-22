@@ -16,3 +16,9 @@ Pupiņvaloda
 Script [pup.php](pup.php) converts Latvian text to so called "pupiņvaloda". It has simple rules, but helps children
 to train diction and thinking, since they have to know how to split a word into syllables and memorize last one on
 the go, to prepend it with "p".
+
+Transliteration
+---------------
+
+[conv.php](conv.php) provides dump transliteration and detransliteration of Latvian text. It does try to keep
+capitalization intact while converting.
