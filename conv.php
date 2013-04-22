@@ -7,7 +7,7 @@ if (isset($_GET['src'])) {
 error_reporting(E_ALL);
 
 $dir = isset($_GET['dir']) ? $_GET['dir'] : (isset($_POST['dir']) ? $_POST['dir'] : 1);
-$c = isset($_POST['c']) ? $_POST['c'] : false;
+$c = isset($_GET['c']) ? $_GET['c'] : (isset($_POST['c']) ? $_POST['c'] : false);
     
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -107,7 +107,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
     
     <h2>Ievadi tekstu</h2>
     
-    <form action="" method="post">
+    <form action="<?=basename(__FILE__)?>" method="post">
     <dl>
         <dt><label for="c">Teksts:</label> </dt>
         <dd>
@@ -145,6 +145,42 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
     $f = Array('aa', 'ch', 'ee', 'gj', 'ii', 'kj', 'lj', 'nj', 'sh', 'uu', 'zh', 'oo');
     $t = Array('ā',  'č',  'ē',  'ģ',  'ī',  'ķ',  'ļ',  'ņ',  'š',  'ū',  'ž',  'ō');
 
+    // Brute force some of the most common exceptions
+    $exceptions = Array(
+        'ieel', # Pieelpot, ieelpa, ieeļļot
+        'ieej', # Iezvanpieeja, pieeja, ieeja
+        '(sh)eem', # Shēma, bet ne Šērlija
+        '(sh)em', # Shematisks
+        'neeso', 'neesa', # Neesošs, neesamība, bet ne nēši (diemžēl)
+        'neeko', # Neekonomisks
+        'neel', # Neelastīgs
+        'jaunj', # Jaunjelgava
+        'alcheim', # Alcheimers (due to popular demand)
+        'sargjos', # Aizsargjosla
+        'amonjak', # Amonjaks
+        'anjon', # Anjons, kanjons
+        'atelj', # Ateljē
+        'ljard', # Miljards
+        'ljon', # Miljons, bataljons
+        'ilja', # Briljants
+        'ek(sh)[iu]', # Ekshumācija, ekhibicionists :)
+        'injek', # Injekcija
+        'injic', # Injicēt
+        'ema(lj)[ae]', # Emalja (izķer arī "nemaļams", bet lai jau...), emalja
+        'dishar', # Disharmonija
+        'konju', # Konjugācija, konjuktivīts, konjuktūra, 
+        'kadiljak', # Kadiljaks
+        'trolj', # Kontroljautājums
+        'lielj', # Lieljauda
+        'reljef', # Reljefs
+        'senjo', # Senjors
+        'rienj', # Skārienjūtīgs
+        'malkj', # Smalkjūtīgs
+        'vakuum', # Vakuumsūknis
+        'vinjet', # Vinjete
+        'vish[aeiou]', # Vishaotiskākais, vish
+        );
+
     for ($i = 0; $i < count($f); $i++) {
         $tolv[$f[$i]] = $t[$i];
         if (!isset($fromlv[$t[$i]]) || trim($fromlv[$t[$i]]) == '')
@@ -153,8 +189,26 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
     
     
     function tolv($q) {
-        global $f, $t, $tolv, $fromlv;
+        global $f, $t, $tolv, $fromlv, $exceptions;
+
         $c = $q;
+
+        // Parse exceptions
+        $replacements = Array(); $i = 0;
+        foreach ($exceptions as $exception) {
+            $c = preg_replace_callback('/' . $exception . '/i', function($m) use(&$replacements, &$i){
+                if (isset($m[1])) {
+                    $tmp = str_replace($m[1], '{{' . $i . '}}', $m[0]);
+                    $replacements[$i] = $m[1];
+                } else {
+                    $tmp = '{{' . $i . '}}';
+                    $replacements[$i] = $m[0];
+                }
+                $i++;
+                return $tmp;
+            }, $c);
+        }
+
         $c = str_replace('eee', 'eē', $c);
         $c = str_replace('Eee', 'Eē', $c);
         $c = str_replace('eEe', 'eĒ', $c);
@@ -171,6 +225,10 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
             }
         }
         $c = str_replace('iē', 'iee', $c);
+
+        foreach ($replacements as $k=>$v) {
+            $c = str_replace('{{' . $k . '}}', $v, $c);
+        }
         return ($c);
     }
     
