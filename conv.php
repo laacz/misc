@@ -273,7 +273,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
     <tr><th>Ierastā rakstība:</th><?for ($i = 0; $i < count($f); $i++) {?><td><?=strup($t[$i])?></td><?}?></tr>
     </table>
     
-    <p id="footer">Autors - <a href="http://laacz.lv/">Kaspars Foigts</a>. Kaut kad 2002. gadā, vai?</p>
+    <p id="footer">Autors - <a href="http://laacz.lv/">Kaspars Foigts</a>. Kaut kad 2002. gadā, vai? <a href="https://github.com/laacz/misc">Kods githubā</a></p>
 
     </div>
     
