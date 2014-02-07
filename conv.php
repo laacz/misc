@@ -261,9 +261,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
         $o = $dir == 1 ? tolv($c) : fromlv($c);
         ?>
         <h2>Rezultāts</h2>
-        <div style="margin-left: 3em; " class="t">
-            <?=nl2br(htmlspecialchars($o));?>
-        </div>
+        <textarea style="margin-left: 3em; " class="t"><?=nl2br(htmlspecialchars($o));?></textarea>
     <?}?>
     
     <h2>Transliterācijas tabula</h2>
