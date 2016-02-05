@@ -397,12 +397,12 @@ function update() {
 
 <form action="" method="get" name="forma">
 <dl>
-  <dt>Vārds: </dt>
-    <dd><input type="text" name="vards" value="<?=htmlspecialchars($vards)?>" onkeyup="update();" /></dd>
+  <dt><label for="id-vards">Vārds: </label></dt>
+    <dd><input type="text" id="id-vards" name="vards" value="<?=htmlspecialchars($vards)?>" onkeyup="update();" /></dd>
   <dt>Dzimte: </dt>
-  <dd><input type="radio" name="dzimte" value="1" <?=$dzimte == 1 ? 'checked="checked"' : ''?>/> Vīriešu <span id="vdz">&nbsp;</span><br />
-      <input type="radio" name="dzimte" value="2"  <?=$dzimte == 2 ? 'checked="checked"' : ''?>/> Sieviešu <span id="sdz">&nbsp;</span><br />
-      <input type="radio" name="dzimte" value="3"  <?=$dzimte == 3 ? 'checked="checked"' : ''?>/> Kopdzimte <span id="kdz">&nbsp;</span>
+  <dd><label><input type="radio" name="dzimte" value="1" <?=$dzimte == 1 ? 'checked="checked"' : ''?>/> Vīriešu <span id="vdz">&nbsp;</span></label><br />
+      <label><input type="radio" name="dzimte" value="2"  <?=$dzimte == 2 ? 'checked="checked"' : ''?>/> Sieviešu <span id="sdz">&nbsp;</span></label><br />
+      <label><input type="radio" name="dzimte" value="3"  <?=$dzimte == 3 ? 'checked="checked"' : ''?>/> Kopdzimte <span id="kdz">&nbsp;</span></label>
       </dd>
 
   <dd><input type="submit" value="Noteikt deklināciju" /></dd>
