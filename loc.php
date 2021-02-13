@@ -441,10 +441,10 @@ if ($vards) {
 <h2>Izmantotie materiāli</h2>
 
 <ul>
-  <li><a href="http://www.liis.lv/latval/morfol/lietv.htm">Lietvārdi</a></li>
+  <li><a href="http://valoda.ailab.lv/latval/vidusskolai/morfol/lietv.htm">Lietvārdi</a></li>
   <ul>
-    <li><a href="http://www.liis.lv/latval/morfol/lietv-dekl.htm">Locīšana un deklinācijas</a></li>
-    <li><a href="http://www.liis.lv/latval/morfol/lietv-dz.htm">Dzimtes</a></li>
+    <li><a href="http://valoda.ailab.lv/latval/vidusskolai/morfol/lietv-dekl.htm">Locīšana un deklinācijas</a></li>
+    <li><a href="http://valoda.ailab.lv/latval/vidusskolai/morfol/lietv-dz.htm">Dzimtes</a></li>
   </ul>
 </ul>
 
