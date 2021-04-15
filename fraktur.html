@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vecā druka</title>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+
+        body {
+            max-width: 95%;
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        #input {
+            margin-right: .5rem;
+        }
+
+        #output {
+            margin-left: .5rem;
+        }
+
+        #input,
+        #output {
+            margin-bottom: 1rem;
+            display: block;
+            width: 100%;
+            font-size: 1.4rem;
+            border: 1px solid #ccc;
+            height: 20rem;
+            line-height: 1.7rem;
+            border: 1px solid navy;
+            background-color: rgba(0, 0, 128, .3);
+            padding: .25rem .5rem;
+        }
+
+        .combine {
+            letter-spacing: -.3rem;
+            padding-right: .2rem;
+        }
+
+        .columns {
+            display: flex;
+            width: 100%;
+        }
+
+        img {
+            margin: 0 auto;
+            display: block;
+            max-width: 100%;
+        }
+
+        .col {
+            flex: 1;
+        }
+
+        @media (max-device-width: 812px) {
+            .columns {
+                flex-direction: column;
+                width: 95%;
+            }
+
+            #input, #output {
+                margin: 1rem 0 ;
+                font-size: 1rem;
+                line-height: 1.2;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>ℜ𝔞𝔨ſ̷𝔱𝔦 𝔣𝔯𝔞𝔨𝔱𝔲𝔥𝔯𝔞̂ 𝔴𝔦ſ̷𝔲𝔯, 𝔨𝔲𝔯 𝔴𝔢𝔥𝔩𝔢𝔢𝔰</h1>
+
+    <p>Pirmajā lauciņā raksti latviski kā ierasts. Otrajā lauciņā paņemsi puslīdz sakarīgi pārveidotu tekstu vecajā
+        ortogrāfijā. 100% nav, bet <em>copy-paste</em> vajadzībām sociālajos tīklos vai citur būs labi.</p>
+
+    <p>Rotaļām - raksti pirmajā lodziņā, saņem otrajā. Nelieli komentāri <a href="https://twitter.com/laacz">tviterī
+            @laacz</a>,
+        garāki uz e-pastu (laacz iekš laacz taška lv) vai kādā no mesendžeriem, ja vari mani tur sasniegt.</p>
+
+    <div class="columns">
+
+        <textarea
+            id="input">Papildu budžets.
+Ministru kabinets vakardienas sēdē apsprieda papildu budžetu 1922./23. gadam un pieņēma to 42.994.000 latu (2.148,7 milj. ruibļ.) kopsumā. No tiem kārtejo izdevumu 19.532.00 latu un ārkārtejo 28.462.000 latu. No kārtejiem izdevumiem vislielakā suma - 16.450.000 latu - atvēleta linu iepirkšanai un linu avansu samaksai. Otra lielakā suma - 2.108.000 latu atvēleta dzelzsceļiem, galvenā kārtā pastiprinatās kustibas uzturešanai.</textarea>
+
+        <textarea id="output"></textarea>
+
+    </div>
+
+    <img src="http://periodika.lv/periodika2-viewer/view/img/block?block=P1_TB00008&issue=/p_001_lavs1923n026&article=DIVL13&quality=&doctype=Newspaper"
+        alt=""><br>
+    <img src="http://periodika.lv/periodika2-viewer/view/img/block?block=P1_TB00009&issue=/p_001_lavs1923n026&article=DIVL13&quality=&doctype=Newspaper"
+        alt="">
+
+    <ul>
+        <li>"𝔰", "ſ" un "ſ̷" lietojums. Nedalām salikteņus, kā rezultātā ignorējam "𝔰" parādīšanos vārda vidū.</li>
+        <li>Windows lietotājiem viss izskatās slikti (iepriekš minētie "ſ" un "ſ̷")</li>
+        <li>Nav vēl pabeigts, ir daudz visādu nianšu (lielie burti, utt)</li>
+        <li>Un, vispār. Vecā ortogrāfija bija <a
+                href="http://gramatas.lndb.lv/periodika2-viewer/view/index-dev.html?lang=fr#panel:pp|issue:/g_001_0304052338|article:DIVL270|page:50|issueType:B">kišmišs
+                ar rozīnēm</a>.</li>
+    </ul>
+
+
+    <script>
+        const LETTER_SMALL = 0;
+        const LETTER_CAPITAL = 1;
+
+        const COMBINING_SHORT_SOLIDUS = '\u0337';
+        const COMBINING_LONG_SOLIDUS = '\u0338';
+        const COMBINING_CIRCUMFLEX_ACCENT = '\u0302';
+
+        let latinToFraktur = [
+            // Sākam ar parastu burtu aizvietošanu
+            ['a', '𝔞', LETTER_SMALL],
+            ['b', '𝔟', LETTER_SMALL],
+            ['c', '𝔷', LETTER_SMALL], // Ne "𝔠"
+            ['d', '𝔡', LETTER_SMALL],
+            ['e', '𝔢', LETTER_SMALL],
+            ['f', '𝔣', LETTER_SMALL],
+            ['g', '𝔤', LETTER_SMALL],
+            ['h', '𝔥', LETTER_SMALL],
+            ['i', '𝔦', LETTER_SMALL],
+            ['j', '𝔧', LETTER_SMALL],
+            ['k', '𝔨', LETTER_SMALL],
+            ['l', '𝔩', LETTER_SMALL],
+            ['m', '𝔪', LETTER_SMALL],
+            ['n', '𝔫', LETTER_SMALL],
+            ['o', '𝔬', LETTER_SMALL],
+            ['p', '𝔭', LETTER_SMALL],
+            ['q', '𝔮', LETTER_SMALL],
+            ['r', '𝔯', LETTER_SMALL],
+            ['s', 'ſ' + COMBINING_SHORT_SOLIDUS, LETTER_SMALL], // Šis nudien izskatās mega tizli. 
+            ['t', '𝔱', LETTER_SMALL],
+            ['u', '𝔲', LETTER_SMALL],
+            ['v', '𝔴', LETTER_SMALL],
+            ['w', '𝔴', LETTER_SMALL],
+            ['x', '𝔵', LETTER_SMALL],
+            ['y', '𝔶', LETTER_SMALL],
+            ['z', 'ſ', LETTER_SMALL], // Ne "𝔷"
+
+            ['A', '𝔄', LETTER_CAPITAL],
+            ['B', '𝔅', LETTER_CAPITAL],
+            ['C', 'ℨ', LETTER_CAPITAL], // Ne 'ℭ'
+            ['D', '𝔇', LETTER_CAPITAL],
+            ['E', '𝔈', LETTER_CAPITAL],
+            ['F', '𝔉', LETTER_CAPITAL],
+            ['G', '𝔊', LETTER_CAPITAL],
+            ['H', 'ℌ', LETTER_CAPITAL],
+            ['I', 'ℑ', LETTER_CAPITAL],
+            ['J', '𝔍', LETTER_CAPITAL],
+            ['K', '𝔎', LETTER_CAPITAL],
+            ['L', '𝔏', LETTER_CAPITAL],
+            ['M', '𝔐', LETTER_CAPITAL],
+            ['N', '𝔑', LETTER_CAPITAL],
+            ['O', '𝔒', LETTER_CAPITAL],
+            ['P', '𝔓', LETTER_CAPITAL],
+            ['Q', '𝔔', LETTER_CAPITAL],
+            ['R', 'ℜ', LETTER_CAPITAL],
+            ['S', '𝔖', LETTER_CAPITAL],
+            ['T', '𝔗', LETTER_CAPITAL],
+            ['U', '𝔘', LETTER_CAPITAL],
+            ['V', '𝔚', LETTER_CAPITAL],
+            ['W', '𝔚', LETTER_CAPITAL],
+            ['X', '𝔛', LETTER_CAPITAL],
+            ['Y', '𝔜', LETTER_CAPITAL],
+            ['Z', '𝔖', LETTER_CAPITAL],
+
+            // Īpatnības
+            // ['z', 's'],
+            // ['dz', 'ds'],
+
+            // Diaktrika 𝔞̂𝔢̂𝔦̂𝔬̂𝔲̂ 𝔞̀𝔢̀𝔦̀𝔬̀𝔲̀
+            ['ā', '𝔞' + COMBINING_CIRCUMFLEX_ACCENT, LETTER_SMALL],
+            ['ē', '𝔢' + COMBINING_CIRCUMFLEX_ACCENT, LETTER_SMALL],
+            ['č', '𝔱ſ𝔠𝔥', LETTER_SMALL],
+            ['ģ', '𝔤' + COMBINING_SHORT_SOLIDUS, LETTER_SMALL],
+            ['ī', '𝔦' + COMBINING_CIRCUMFLEX_ACCENT, LETTER_SMALL],
+            ['ķ', '𝔨' + COMBINING_SHORT_SOLIDUS, LETTER_SMALL],
+            ['ļ', '𝔩' + COMBINING_SHORT_SOLIDUS, LETTER_SMALL],
+            ['ņ', '𝔫' + COMBINING_SHORT_SOLIDUS, LETTER_SMALL],
+            ['š', 'ſ𝔠𝔥', LETTER_SMALL],
+            ['ū', '𝔲' + COMBINING_CIRCUMFLEX_ACCENT, LETTER_SMALL],
+            ['ž', 'ſ𝔠𝔥', LETTER_SMALL],
+
+            ['Ā', '𝔄' + COMBINING_CIRCUMFLEX_ACCENT, LETTER_CAPITAL],
+            ['Ē', '𝔈' + COMBINING_CIRCUMFLEX_ACCENT, LETTER_CAPITAL],
+            ['Č', '𝔗ſ𝔠𝔥', LETTER_CAPITAL], // @TODO
+            ['Ģ', '𝔊' + COMBINING_LONG_SOLIDUS, LETTER_CAPITAL],
+            ['Ī', 'ℑ' + COMBINING_CIRCUMFLEX_ACCENT, LETTER_CAPITAL],
+            ['Ķ', '𝔎' + COMBINING_LONG_SOLIDUS, LETTER_CAPITAL],
+            ['Ļ', '𝔏' + COMBINING_LONG_SOLIDUS, LETTER_CAPITAL],
+            ['Ņ', '𝔑' + COMBINING_LONG_SOLIDUS, LETTER_CAPITAL],
+            ['Š', '𝔖𝔠𝔥', LETTER_CAPITAL], // @TODO
+            ['Ū', '𝔘' + COMBINING_CIRCUMFLEX_ACCENT, LETTER_CAPITAL],
+            ['Ž', '𝔖𝔠𝔥', LETTER_CAPITAL], // @TODO
+
+        ];
+
+        // RegExp, kas satur visus iespējamos burtus (word boundary vajadzībām)
+        let boundary = latinToFraktur.map((e) => e[1]).join('|')
+        // RegExp, kas satur visus lielos burtus.
+        let capitals = latinToFraktur.filter((e) => e[2] === LETTER_CAPITAL && e[1].replace(COMBINING_CIRCUMFLEX_ACCENT, '').length < 3).map(e => e[1]).join('|')
+
+        let input = document.getElementById('input');
+        let output = document.getElementById('output');
+
+        function gothme() {
+            output.value = Goth(input.value);
+        }
+
+        input.addEventListener('input', gothme)
+        gothme();
+
+        // Vienkāršākai dzīvei.
+        Object.assign(String.prototype, {
+            isUpperCase() {
+                return this.toUpperCase() === this.toString();
+            },
+        });
+
+        function Goth(str) {
+            let ret = str;
+
+            // Pirmais solis - tupa visu repleisojam.
+            latinToFraktur.forEach((val) => {
+                ret = ret.replace(new RegExp(val[0], 'g'), val[1]);
+            })
+
+            // Vārdu beigās viss ir savādāk. Visur ir transliterācija, izņemot vārdu beigas (un vēl daži gadījumi, kurus ignorēju)
+            ret = ret.replace(new RegExp('𝔞̂(' + boundary + ')', 'g'), '𝔞𝔥$1');
+            ret = ret.replace(new RegExp('𝔢̂(' + boundary + ')', 'g'), '𝔢𝔥$1');
+            ret = ret.replace(new RegExp('𝔦̂(' + boundary + ')', 'g'), '𝔦𝔥$1');
+            ret = ret.replace(new RegExp('𝔲̂(' + boundary + ')', 'g'), '𝔲𝔥$1');
+            // Tas pats, kas iepriekš, tikai lielajiem burtiem
+            ret = ret.replace(new RegExp('𝔄̂(' + boundary + ')', 'g'), '𝔄𝔥$1');
+            ret = ret.replace(new RegExp('𝔈̂(' + boundary + ')', 'g'), '𝔈𝔥$1');
+            ret = ret.replace(new RegExp('ℑ̂(' + boundary + ')', 'g'), 'ℑ𝔥$1');
+            ret = ret.replace(new RegExp('𝔘̂(' + boundary + ')', 'g'), '𝔘𝔥$1');
+            // Vārda beigās ir smukais s, nevis garais vai garais švīkotais. Un vēl daži gadījumi, kurus ignorēju.
+            ret = ret.replace(new RegExp('ſ̷(?!' + boundary + ')', 'g'), '𝔰'); // Negative look-ahead FTW
+            // Pirms t un p ir garais s bez švīkojuma
+            ret = ret.replace(/ſ̷([tp])/g, 'ſ$1');
+            // Ie -> ee
+            ret = ret.replace(new RegExp('𝔦𝔢', 'g'), '𝔢𝔢');
+            ret = ret.replace(new RegExp('ℑ𝔈', 'g'), '𝔈𝔈');
+
+            // Dubultais s (zelZSceļš)
+            ret = ret.replace(new RegExp('ſſ̷', 'g'), 'ſ𝔰');
+
+            // Kombinētie (tsch, sch) jāpalielina, ja tiem seko lielais burts.
+            ret = ret.replace(new RegExp('𝔗ſ𝔠𝔥(' + capitals + ')', 'g'), '𝔗ℭℌ$1');
+            ret = ret.replace(new RegExp('𝔖𝔠𝔥(' + capitals + ')', 'g'), '𝔖ℭℌ$1');
+            // Ja Eh seko lielais burts, palieilinam EH.
+            ret = ret.replace(new RegExp('(𝔄|𝔈|ℑ|𝔘)𝔥(' + capitals + ')', 'g'), '$1ℌ$2');
+            // Divreiz, jo nesapratu - dažreiz neiziet 'g' flags.
+            ret = ret.replace(new RegExp('(𝔄|𝔈|ℑ|𝔘)𝔥(' + capitals + ')', 'g'), '$1ℌ$2');
+
+            // Mazais 's' ideālajā pasaulē pēc visiem senlatviešu fenšui:
+            // - Vārda sākumā švīkotais garais. (Savus, Sēdē)
+            // - Pēc priedēķļa švīkotais garais (atSaukdama, ieSniegti)
+            // - Vārda beigās "s" (buhS, taS)
+            // - Vārda vidū parastais garais (miniStru)
+            // - "Z" ir parastais garais (beZ, iZmantot)
+            // - Daudzskaņos švīkotais garais (sch)
+            // - Neidentificētos gadījumos švīkotais garais (piepraSijumiem, puSes, utt)
+
+
+
+            return ret;
+        }
+
+        const tests = [
+            ['Papildu budžets.', '𝔓𝔞𝔭𝔦𝔩𝔡𝔲 𝔟𝔲𝔡ſ𝔠𝔥𝔢𝔱𝔰.'],
+            ['Ministru kabinets wkardienas sēdē', '𝔐𝔦𝔫𝔦ſ̷𝔱𝔯𝔲 𝔨𝔞𝔟𝔦𝔫𝔢𝔱𝔰 𝔴𝔨𝔞𝔯𝔡𝔢𝔢𝔫𝔞𝔰 ſ̷𝔢𝔥𝔡𝔢̂'],
+            ['Lāpā', '𝔏𝔞𝔥𝔭𝔞̂'],
+            ['Šodien', '𝔖𝔠𝔥𝔬𝔡𝔢𝔢𝔫'],
+            ['ŠODIEN', '𝔖ℭℌ𝔒𝔇𝔈𝔈𝔑'],
+            ['Ciktāļ', 'ℨ𝔦𝔨𝔱𝔞𝔥𝔩̷'],
+            ['ĀĒĪŪ', '𝔄ℌ𝔈ℌℑℌ𝔘' + COMBINING_CIRCUMFLEX_ACCENT],
+            ['Bez šaubām', '𝔅𝔢ſ ſ𝔠𝔥𝔞𝔲𝔟𝔞𝔥𝔪']
+        ];
+
+        tests.forEach((test) => {
+            const actual = Goth(test[0]);
+            const pass = test[1] === actual;
+            const common_style = 'color: white; padding: .15rem .3rem; font-weight: bold;';
+            console.log('%c' + (pass ? '✓' : '✕'), pass ? 'background-color: green;' + common_style : 'background-color: red;' + common_style, test[0], '=>', test[1], (!pass ? '(got: ' + actual + ')' : ''));
+        })
+
+    </script>
+</body>
+
+</html>

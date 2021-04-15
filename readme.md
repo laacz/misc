@@ -3,6 +3,11 @@ Misc stuff, I've acquired over the years
 
 This repository contains miscellania, I've done or acquired over the years.
 
+Frakturizer
+-----------
+[fraktur.html](fraktur.html) tries to convert modern Latvian text to fraktur script, using unicode, some rules and luck. 
+Pull requests welcome.
+
 Inflection of Latvian nouns
 ---------------------------
 
