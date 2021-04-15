@@ -149,6 +149,7 @@ Ministru kabinets vakardienas sēdē apsprieda papildu budžetu 1922./23. gadam 
             ['y', '𝔶', LETTER_SMALL],
             ['z', 'ſ', LETTER_SMALL], // Ne "𝔷"
 
+
             ['A', '𝔄', LETTER_CAPITAL],
             ['B', '𝔅', LETTER_CAPITAL],
             ['C', 'ℨ', LETTER_CAPITAL], // Ne 'ℭ'
@@ -176,6 +177,10 @@ Ministru kabinets vakardienas sēdē apsprieda papildu budžetu 1922./23. gadam 
             ['Y', '𝔜', LETTER_CAPITAL],
             ['Z', '𝔖', LETTER_CAPITAL],
 
+            // Dummy - lai ir pilns alfabets
+            ['𝔠', '𝔠', LETTER_SMALL],
+            ['ℭ', 'ℭ', LETTER_CAPITAL], 
+
             // Īpatnības
             // ['z', 's'],
             // ['dz', 'ds'],
@@ -191,7 +196,7 @@ Ministru kabinets vakardienas sēdē apsprieda papildu budžetu 1922./23. gadam 
             ['ņ', '𝔫' + COMBINING_SHORT_SOLIDUS, LETTER_SMALL],
             ['š', 'ſ𝔠𝔥', LETTER_SMALL],
             ['ū', '𝔲' + COMBINING_CIRCUMFLEX_ACCENT, LETTER_SMALL],
-            ['ž', 'ſ𝔠𝔥', LETTER_SMALL],
+            ['ž', 'ſ' + COMBINING_SHORT_SOLIDUS + '𝔠𝔥', LETTER_SMALL],
 
             ['Ā', '𝔄' + COMBINING_CIRCUMFLEX_ACCENT, LETTER_CAPITAL],
             ['Ē', '𝔈' + COMBINING_CIRCUMFLEX_ACCENT, LETTER_CAPITAL],
@@ -259,8 +264,8 @@ Ministru kabinets vakardienas sēdē apsprieda papildu budžetu 1922./23. gadam 
             ret = ret.replace(new RegExp('ſſ̷', 'g'), 'ſ𝔰');
 
             // Kombinētie (tsch, sch) jāpalielina, ja tiem seko lielais burts.
-            ret = ret.replace(new RegExp('𝔗ſ𝔠𝔥(' + capitals + ')', 'g'), '𝔗ℭℌ$1');
-            ret = ret.replace(new RegExp('𝔖𝔠𝔥(' + capitals + ')', 'g'), '𝔖ℭℌ$1');
+            ret = ret.replace(new RegExp('𝔗ſ̷𝔠𝔥(' + capitals + ')', 'g'), '𝔗ℭℌ$1');
+            ret = ret.replaceAll(new RegExp('𝔖𝔠𝔥(' + capitals + ')', 'g'), '𝔖ℭℌ$1');
             // Ja Eh seko lielais burts, palieilinam EH.
             ret = ret.replace(new RegExp('(𝔄|𝔈|ℑ|𝔘)𝔥(' + capitals + ')', 'g'), '$1ℌ$2');
             // Divreiz, jo nesapratu - dažreiz neiziet 'g' flags.
@@ -281,14 +286,15 @@ Ministru kabinets vakardienas sēdē apsprieda papildu budžetu 1922./23. gadam 
         }
 
         const tests = [
-            ['Papildu budžets.', '𝔓𝔞𝔭𝔦𝔩𝔡𝔲 𝔟𝔲𝔡ſ𝔠𝔥𝔢𝔱𝔰.'],
+            ['Papildu budžets.', '𝔓𝔞𝔭𝔦𝔩𝔡𝔲 𝔟𝔲𝔡ſ̷𝔠𝔥𝔢𝔱𝔰.'],
             ['Ministru kabinets wkardienas sēdē', '𝔐𝔦𝔫𝔦ſ̷𝔱𝔯𝔲 𝔨𝔞𝔟𝔦𝔫𝔢𝔱𝔰 𝔴𝔨𝔞𝔯𝔡𝔢𝔢𝔫𝔞𝔰 ſ̷𝔢𝔥𝔡𝔢̂'],
             ['Lāpā', '𝔏𝔞𝔥𝔭𝔞̂'],
             ['Šodien', '𝔖𝔠𝔥𝔬𝔡𝔢𝔢𝔫'],
             ['ŠODIEN', '𝔖ℭℌ𝔒𝔇𝔈𝔈𝔑'],
             ['Ciktāļ', 'ℨ𝔦𝔨𝔱𝔞𝔥𝔩̷'],
             ['ĀĒĪŪ', '𝔄ℌ𝔈ℌℑℌ𝔘' + COMBINING_CIRCUMFLEX_ACCENT],
-            ['Bez šaubām', '𝔅𝔢ſ ſ𝔠𝔥𝔞𝔲𝔟𝔞𝔥𝔪']
+            ['Bez šaubām', '𝔅𝔢ſ ſ𝔠𝔥𝔞𝔲𝔟𝔞𝔥𝔪'],
+            ['Glāžšķūnis', '𝔊𝔩𝔞𝔥ſ̷𝔠𝔥ſ𝔠𝔥𝔨̷𝔲𝔥𝔫𝔦𝔰'],
         ];
 
         tests.forEach((test) => {
