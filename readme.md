@@ -3,26 +3,26 @@ Misc stuff, I've acquired over the years
 
 This repository contains miscellania, I've done or acquired over the years.
 
-Frakturizer
+Frakturizer (2021)
 -----------
 [fraktur.html](fraktur.html) tries to convert modern Latvian text to fraktur script, using unicode, some rules and luck. 
 Pull requests welcome.
 
-Inflection of Latvian nouns
+Inflection of Latvian nouns (2003)
 ---------------------------
 
 [loc.php](loc.php) contains code (old as the world, of course), which can inflect Latvian nouns, given their
 nominative case in singular, and gender. It has its exceptions and shortcomings, but go ahead - fork it and throw a 
 pull request at me.
 
-Pupiņvaloda
+Pupiņvaloda (2003)
 -----------
 
 Script [pup.php](pup.php) converts Latvian text to so called "pupiņvaloda". It has simple rules, but helps children
 to train diction and thinking, since they have to know how to split a word into syllables and memorize last one on
 the go, to prepend it with "p".
 
-Transliteration
+Transliteration (2003)
 ---------------
 
 [conv.php](conv.php) provides dumb transliteration and detransliteration of Latvian text. It does try to keep
